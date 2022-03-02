@@ -30,6 +30,17 @@ from keras.utils import plot_model
 from sklearn import metrics
 from scipy.misc import imsave
 
+physical_devices = tf.config.experimental.list_physical_devices('GPU')
+assert len(physical_devices) > 0, "Not enough GPU hardware devices available"
+tf.config.experimental.set_memory_growth(physical_devices[0], True)
+from keras.backend.tensorflow_backend import set_session
+config = tf.ConfigProto(allow_soft_placement=True, log_device_placement=True)
+config.gpu_options.allow_growth = True
+config.gpu_options.per_process_gpu_memory_fraction = 0.8
+config.gpu_options.polling_inactive_delay_msecs = 10
+sess = tf.Session(config=config)
+set_session(sess)  # set this TensorFlow session as the default session for Keras
+
 from cnn import eucl_dist_output_shape, contrastive_loss, euclidean_distance
 import settings
 

@@ -1,0 +1,4 @@
+data/
+saved_*/
+*.pyc
+*.npy
